@@ -56,11 +56,35 @@ class MovieRepository @Inject()(
 
   }
 
+  def create(movie: Movie) = {
+    val insert = movieQuery +=  movie//Insertamos el dato a la derecha dentro de la tabla qyuery, la tabla
+    db.run(insert) // se genera la insercion en la BD
+      .flatMap(_ => getOne(movie.id.getOrElse(""))) //flatmap nos aplana el tipo de dato que retorna
 
-  
-  def create = ???
-  def update = ???
-  def delete = ???
+  }
+
+   def update(id: String, movie: Movie) = {
+    // Seleccionamos la pelicula que queremos actualizar por medio de el ID
+    val q = movieQuery.filter(_.id === movie.id &&movie.id.contains(id))
+    val update = q.update(movie) // Modifica la pelicula que queremos actualizar
+    db.run(update)
+      .flatMap(_ => db.run(q.result.headOption)) //devuelve lo que ya consulte, encadenado
+
+  }
+
+  def delete(id: String) = {
+    val q = movieQuery.filter(_.id === id)  // Compara el Id de la tabla con el id de parametro
+    // Retornamos el valor que eliminamos
+
+    // For compresion
+    for {
+      objeto <- db.run(q.result.headOption)
+      _ <- db.run(q.delete)
+    } yield objeto
+
+  }
+
+
 
 
 }
