@@ -84,7 +84,14 @@ class MovieRepository @Inject()(
 
   }
 
-
+  /**
+   * Computación paralela, asíncrona, y concurrente
+   *
+   * Paralelo: que puede ejecutar varias tareas independientes entre sí.
+   * Asíncrono: que puede ejecutar varias tareas (a veces dependientes entre si) sin necesidad de bloquearlas.
+   * Concurrente: que puede ejecutarse en distintos medios al mismo tiempo de manera coordinada.
+   *
+   */
 
 
 }
