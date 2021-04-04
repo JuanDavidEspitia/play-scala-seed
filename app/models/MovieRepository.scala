@@ -35,6 +35,32 @@ class MovieRepository @Inject()(
     db.run(createSchema)
   }
 
+  /**
+   * Programacion Asincrona: --> Futuros
+   */
+
+  def getAll = {
+    val q = movieQuery.sortBy(x => x.id) // Devuelve la tabla organizada por el ID
+    db.run(q.result) // Permite debolver la tabla, consulta sobre todos los datos de la tabla pelicula
+
+  }
+
+  /**
+   * Metodo para encontrar un solo valor que necesitamos conusltar
+   * @param id: Que es que le enviamos para que haga la busqueda
+   * @return
+   */
+  def getOne(id: String) = {
+    val q = movieQuery.filter(_.id === id) // Compara la columna ID con el valor ID que recibe por parametro
+    db.run(q.result.headOption) // Si encuentra el ID lo devuelve dentro de un Option con el valor o un Non si no lo encutra
+
+  }
+
+
+  
+  def create = ???
+  def update = ???
+  def delete = ???
 
 
 }
